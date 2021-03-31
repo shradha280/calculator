@@ -5,14 +5,14 @@ import shradha.tdd.StrCal;
  
 public class StrCalTesting {
     @Test
-    public final void twoNumbersAreAdded() {
-        StrCal.Add("1,2");
-        Assert.assertTrue(true);
-    }
-    @Test(expected = RuntimeException.class)
-    public final void nonNumbers() {
-        StrCal.Add("1,X");
-    }
+    public final void oneNumberreturnSameValue() {
+    Assert.assertEquals(3, StrCal.add("3"));
+ }
+ 
+    @Test
+    public final void TwoNumbers() {
+    Assert.assertEquals(3+6, StrCal.Add("3,6"));
+}
     @Test
     public final void emptyStringReturn0() {
     Assert.assertEquals(0, StrCal.Add(""));
@@ -20,11 +20,13 @@ public class StrCalTesting {
 }
 public class StrCal {
     public static final void Add(final String num) {
+int total =0;
         String[] array= num.split(",");
-            for (String num: array) {
-              if (!number.isEmpty()) {
-                Integer.parseInt(num); 
-            }
+            for (String num : array) {
+        if (!num.trim().isEmpty()) { 
+            total+= Integer.parseInt(num);
         }
     }
+    return total;
+}
 }
