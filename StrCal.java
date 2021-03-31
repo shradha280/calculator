@@ -3,28 +3,36 @@ package shradha.tddtest;
 import org.junit.Test;
 import shradha.tdd.StrCal;
  public class StrCal {
- @Test
-    public final void newLines() {
-        Assert.assertEquals(3+1, StrCal.Add("//;n3;1"));
-    }
-   public static int Add(final String num) {
-    String delim = ",|n";
-    String noDelim= num;
-    if (num.startsWith("//")) {
-        int index = num.indexOf("//") + 2;
-        delim = num.substring(index, index + 1);
-        noDelim= num.substring(num.indexOf("n") + 1);
-    }
-    return add(noDelim, delim);
+ @Test(expected = RuntimeException.class)
+public final void NegitiveNumber() {
+    StrCal.Add("5,6,-1");
 }
-   public static int Add(final String num, final string delim) {
+@Test
+public final void NegativeNumbers() {
+    RuntimeException exception = null;
+    try {
+        StrCal.Add("5,-6,-1");
+    } catch (RuntimeException e) {
+        exception = e;
+    }
+    Assert.assertNotNull(exception);
+    Assert.assertEquals("Negatives not allowed: [-6, -1]", exception.getMessage());
+}
+   private static int add(final String num, final String delimiter) {
     int total= 0;
-    String[] array = num.split(delim);
-    
-    for (String num : array) {
-        if (!num.trim().isEmpty()) { 
-            total+= Integer.parseInt(num.trim());
+    String[] array= num.split(delimiter);
+    List negNum = new ArrayList();
+    for (String numb : array{
+        if (!num.trim().isEmpty()) {
+            int num1 = Integer.parseInt(num.trim());
+            if (num1 < 0) {
+                negNum.Add(num1);
+            }
+            total+= num1;
         }
+    }
+    if (negNum.size() > 0) {
+        throw new RuntimeException("Negatives are not allowed: " + negNum.toString());
     }
     return total;
 }
